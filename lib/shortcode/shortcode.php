@@ -54,6 +54,9 @@
             
             'downloadable' => "no",
             'download' => "no",
+
+            'uploadable' => "no",
+            'upload' => "no",
             
             'note' => false,
             'notes' => "no",
@@ -170,6 +173,11 @@
         if ($download == "yes" || $download == "true" || $download === true
                 || $downloadable == "yes" || $downloadable == "true" || $downloadable === true)
             $download = true; else $download = false;
+
+        // Show upload link
+        if ($upload == "yes" || $upload == "true" || $upload === true
+                || $uploadable == "yes" || $uploadable == "true" || $uploadable === true)
+            $upload = true; else $upload = false;
         
         // Show notes
         if ($notes) $notes = str_replace('"','',html_entity_decode($notes));
@@ -260,7 +268,7 @@
 		if ( is_array( $author ) ) $temp_author = implode( "-", $author); else $temp_author = $author;
 		if ( is_array( $year ) ) $temp_year = implode( "-", $year); else $temp_year = $year;
 		if ( is_array( $sortby ) ) $temp_sortby = implode( "-", $sortby); else $temp_sortby = $sortby;
-        $zp_instance_id = "zotpress-".md5($api_user_id.$nickname.$temp_author.$temp_year.$data_type.$temp_collection_id.$temp_item_key.$temp_tag_name.$style.$temp_sortby.$order.$limit.$showimage.$download.$note.$cite.$inclusive);
+        $zp_instance_id = "zotpress-".md5($api_user_id.$nickname.$temp_author.$temp_year.$data_type.$temp_collection_id.$temp_item_key.$temp_tag_name.$style.$temp_sortby.$order.$limit.$showimage.$download.$upload.$note.$cite.$inclusive);
         
 		// Prepare item key
 		if ( $item_key ) if ( gettype( $item_key ) != "string" ) $item_key = implode( ",", $item_key );
@@ -290,7 +298,8 @@
 			<span class="ZP_TITLE" style="display: none;">'.$title.'</span>
 			<span class="ZP_SHOWIMAGE" style="display: none;">'.$showimage.'</span>
 			<span class="ZP_SHOWTAGS" style="display: none;">'.$showtags.'</span>
-			<span class="ZP_DOWNLOADABLE" style="display: none;">'.$download.'</span>
+      <span class="ZP_DOWNLOADABLE" style="display: none;">'.$download.'</span>
+      <span class="ZP_UPLOADABLE" style="display: none;">'.$upload.'</span>
 			<span class="ZP_NOTES" style="display: none;">'.$notes.'</span>
 			<span class="ZP_ABSTRACT" style="display: none;">'.$abstracts.'</span>
 			<span class="ZP_CITEABLE" style="display: none;">'.$cite.'</span>

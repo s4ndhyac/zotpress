@@ -19,7 +19,8 @@ class zotpressLib
 	private $sortby = false;
 	private $order = false;
 	private $citeable = false;
-	private $downloadable = false;
+  private $downloadable = false;
+  private $uploadable = false;
 	private $showimage = false;
 	private $is_admin = false;
 	private $urlwrap = false;
@@ -108,6 +109,11 @@ class zotpressLib
 	public function setDownloadable($download)
 	{
 		$this->downloadable = $download;
+  }
+  
+  public function setUploadable($upload)
+	{
+		$this->uploadable = $upload;
 	}
 	
 	public function setShowImage($showimage)
@@ -209,7 +215,7 @@ class zotpressLib
 		$content .= '<span id="ZP_SORTBY" style="display: none;">'.$this->sortby.'</span>';
 		$content .= '<span id="ZP_ORDER" style="display: none;">'.$this->order.'</span>';
 		$content .= '<span id="ZP_CITEABLE" style="display: none;">'.$this->citeable.'</span>';
-		$content .= '<span id="ZP_DOWNLOADABLE" style="display: none;">'.$this->downloadable.'</span>';
+		$content .= '<span id="ZP_UPLOADABLE" style="display: none;">'.$this->uploadable.'</span>';
 		$content .= '<span id="ZP_SHOWIMAGE" style="display: none;">'.$this->showimage.'</span>';
 		$content .= '<span id="ZP_TARGET" style="display: none;">'.$this->target.'</span>';
 		$content .= '<span id="ZP_URLWRAP" style="display: none;">'.$this->urlwrap.'</span>';
@@ -286,12 +292,14 @@ class zotpressLib
                         $maxperpage = 10; if ( $this->getMaxPerPage() ) $maxperpage = intval($this->getMaxPerPage());
                         $content .= '<input type="hidden" id="ZOTPRESS_AC_MAXPERPAGE" name="ZOTPRESS_AC_MAXPERPAGE" value="'.$maxperpage.'" />';
                         
-                        // Downloadable, Citeable, Showimages
+                        // Downloadable, Uploadable, Citeable, Showimages
                         $downloadable = false; if ( $this->downloadable ) $downloadable = $this->downloadable;
+                        $uploadable = false; if ( $this->uploadable ) $uploadable = $this->uploadable;
                         $citeable = false; if ( $this->citeable ) $citeable = $this->citeable;
                         $showimages = false; if ( $this->showimage ) $showimages = $this->showimage;
                         
                         $content .= '<input type="hidden" id="ZOTPRESS_AC_DOWNLOAD" name="ZOTPRESS_AC_DOWNLOAD" value="'.$downloadable.'" />';
+                        $content .= '<input type="hidden" id="ZOTPRESS_AC_UPLOAD" name="ZOTPRESS_AC_UPLOAD" value="'.$uploadable.'" />';
                         $content .= '<input type="hidden" id="ZOTPRESS_AC_CITE" name="ZOTPRESS_AC_CITE" value="'.$citeable.'" />';
                         if ( $showimages ) $content .= '<input type="hidden" id="ZOTPRESS_AC_IMAGES" name="ZOTPRESS_AC_IMAGES" value="true" />';
                         

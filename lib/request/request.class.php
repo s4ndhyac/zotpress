@@ -242,6 +242,12 @@ if ( ! class_exists('ZotpressRequest') )
             
             return array( "data" => $data, "headers" => $headers );
         }
+
+        //TODO:
+        function postRequest()
+        {
+
+        }
     }
 }
 

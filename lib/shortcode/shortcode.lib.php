@@ -27,7 +27,9 @@
 			'cite' => false,
 			'citeable' => false,
 			'download' => false,
-			'downloadable' => false,
+      'downloadable' => false,
+      'upload' => false,
+			'uploadable' => false,
 			'showimage' => false,
 			'showimages' => false,
 			'showtags' => false, // not implemented
@@ -86,7 +88,11 @@
 		
 		// Downloadable
 		if ( $download ) $download = str_replace('"','',html_entity_decode($download));
-		if ( $downloadable ) $download = str_replace('"','',html_entity_decode($downloadable));
+    if ( $downloadable ) $download = str_replace('"','',html_entity_decode($downloadable));
+    
+    // Uploadable
+		if ( $upload ) $upload = str_replace('"','',html_entity_decode($upload));
+		if ( $uploadable ) $upload = str_replace('"','',html_entity_decode($uploadable));
 		
 		// Show image
 		if ( $showimages ) $showimage = str_replace('"','',html_entity_decode($showimages));
@@ -147,7 +153,7 @@
 		$zpLib->setSortBy($sortby);
 		$zpLib->setOrder($order);
 		$zpLib->setCiteable($cite);
-		$zpLib->setDownloadable($download);
+		$zpLib->setUploadable($upload);
 		$zpLib->setShowImage($showimage);
 		$zpLib->setURLWrap($urlwrap);
 		$zpLib->setTarget($target);

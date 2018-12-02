@@ -99,7 +99,7 @@
 				&& ( strtolower($_GET['order']) == "asc" || strtolower($_GET['order']) == "desc" ) )
 			$zp_order = strtolower($_GET['order']);
 		
-		// Show images, show tags, downloadable, inclusive, notes, abstracts, citeable
+		// Show images, show tags, downloadable, uploadable, inclusive, notes, abstracts, citeable
 		$zp_showimage = false;
 		if ( isset($_GET['showimage']) )
 			if ( $_GET['showimage'] == "yes" || $_GET['showimage'] == "true"
@@ -117,7 +117,12 @@
 		$zp_downloadable = false;
 		if ( isset($_GET['downloadable'])
 				&& ( $_GET['downloadable'] == "yes" || $_GET['downloadable'] == "true" || $_GET['downloadable'] === true || $_GET['downloadable'] == 1 ) )
-			$zp_downloadable = true;
+      $zp_downloadable = true;
+      
+    $zp_uploadable = false;
+    if ( isset($_GET['uploadable'])
+        && ( $_GET['uploadable'] == "yes" || $_GET['uploadable'] == "true" || $_GET['uploadable'] === true || $_GET['uploadable'] == 1 ) )
+      $zp_uploadable = true;
 		
 		$zp_inclusive = false;
 		if ( isset($_GET['inclusive'])
@@ -669,9 +674,9 @@
 						$item->bib = str_ireplace( $zp_highlight, "<strong>".$zp_highlight."</strong>", $item->bib );
 					
 					// Downloads, notes
-					if ( $zp_downloadable || $zp_shownotes )
+					if ( $zp_downloadable || $zp_shownotes || $zp_uploadable)
 					{
-						// Check if item has children that could be downloads
+						// Check if item has children that could be downloads or downloads
 						if ( $item->meta->numChildren > 0 )
 						{
 							$zp_child_url = "https://api.zotero.org/".$zp_account[0]->account_type."/".$zp_api_user_id."/items";
@@ -685,7 +690,8 @@
 							$zp_child_request = $zp_import_child->get_request_contents( $zp_child_url, $zp_update );
 							$zp_children = json_decode( $zp_child_request["json"] );
 							
-							$zp_download_meta = false;
+              $zp_download_meta = false;
+              $zp_upload_meta = false;
 							$zp_notes_meta = array();
 							
 							foreach ( $zp_children as $zp_child )
@@ -704,7 +710,12 @@
 												"contentType" => $zp_child->data->contentType
 											);
 									}
-								}
+                }
+                
+                if($zp_uploadable)
+                {
+                    //TODO:
+                }
 								
 								// Check for notes
 								if ( $zp_shownotes )
@@ -717,7 +728,12 @@
 							// Display download link if file exists
 							if ( $zp_download_meta )
 								$item->bib = preg_replace('~(.*)' . preg_quote( '</div>', '~') . '(.*?)~', '$1' . " <a title='Download' class='zp-DownloadURL' href='".ZOTPRESS_PLUGIN_URL."lib/request/request.dl.php?api_user_id=".$zp_api_user_id."&amp;key=".$zp_download_meta["key"]."&amp;content_type=".$zp_download_meta["contentType"]."'>Download</a></div>" . '$2', $item->bib, 1 );
-							
+              
+              // Display upload link //TODO:
+							if ( $zp_upload_meta )
+                $item->bib = preg_replace('~(.*)' . preg_quote( '</div>', '~') . '(.*?)~', '$1' . " <a title='Upload' class='zp-UploadURL' href='".ZOTPRESS_PLUGIN_URL."lib/request/request.ul.php?api_user_id=".$zp_api_user_id."&amp;key=".$zp_upload_meta["key"]."&amp;content_type=".$zp_upload_meta["contentType"]."'>Upload</a></div>" . '$2', $item->bib, 1 );
+
+
 							// Display notes, if any
 							if ( count($zp_notes_meta) > 0 )
 							{

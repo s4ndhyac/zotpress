@@ -24,6 +24,10 @@
 			
             'download' => "no",
             'downloadable' => false,
+            
+            'upload' => "no",
+            'uploadable' => false,
+
             'notes' => false,
             'abstract' => false,
             'abstracts' => false,
@@ -67,6 +71,10 @@
         if ($download) $download = str_replace('"','',html_entity_decode($download));
         else if ($downloadable) $download = str_replace('"','',html_entity_decode($downloadable));
         if ($download == "yes" || $download == "true" || $download === true) $download = true; else $download = false;
+
+        if ($upload) $upload = str_replace('"','',html_entity_decode($upload));
+        else if ($uploadable) $upload = str_replace('"','',html_entity_decode($uploadable));
+        if ($upload == "yes" || $upload == "true" || $upload === true) $upload = true; else $upload = false;
         
         $notes = str_replace('"','',html_entity_decode($notes));
         
@@ -106,7 +114,7 @@
 		}
 		
         // Generate instance id for shortcode
-        $zp_instance_id = "zotpress-".md5($item_key.$style.$sortby.$order.$showimage.$showtags.$title.$download.$notes.$abstracts.$cite.$target.$forcenumber);
+        $zp_instance_id = "zotpress-".md5($item_key.$style.$sortby.$order.$showimage.$showtags.$title.$download.$upload.$notes.$abstracts.$cite.$target.$forcenumber);
 		
 		
         // GENERATE IN-TEXT BIB STRUCTURE
@@ -122,7 +130,8 @@
 			<span class="ZP_TITLE" style="display: none;">'.$title.'</span>
 			<span class="ZP_SHOWIMAGE" style="display: none;">'.$showimage.'</span>
 			<span class="ZP_SHOWTAGS" style="display: none;">'.$showtags.'</span>
-			<span class="ZP_DOWNLOADABLE" style="display: none;">'.$download.'</span>
+      <span class="ZP_DOWNLOADABLE" style="display: none;">'.$download.'</span>
+      <span class="ZP_UPLOADABLE" style="display: none;">'.$upload.'</span>
 			<span class="ZP_NOTES" style="display: none;">'.$notes.'</span>
 			<span class="ZP_ABSTRACT" style="display: none;">'.$abstracts.'</span>
 			<span class="ZP_CITEABLE" style="display: none;">'.$cite.'</span>
