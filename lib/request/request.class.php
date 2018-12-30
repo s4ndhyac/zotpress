@@ -243,11 +243,96 @@ if ( ! class_exists('ZotpressRequest') )
             return array( "data" => $data, "headers" => $headers );
         }
 
-        //TODO:
-        function postRequest()
-        {
 
+        function post_request_contents($url, $data, $headers)
+        {
+          return $this->postRequest($url, $data, $headers);
         }
+
+        function postRequest($xml_url, $body, $headers)
+        {
+          // Get and set api user id
+          $divider = "users/"; if ( strpos( $xml_url, "groups" ) !== false ) $divider = "groups/";
+          $temp1 = explode( $divider, $xml_url );
+          $temp2 = explode( "/", $temp1[1] );
+          $this->api_user_id = $temp2[0];
+          
+          // Post the data
+          $data = $this->postXmlData($xml_url, $body, $headers);
+          
+          // Check for request errors
+          if ( $this->request_error !== false )
+          {
+              return $this->request_error;
+              exit();
+          }
+          
+          // Otherwise, return the data
+          else
+          {
+              return $data;
+          }
+        }
+
+
+        function postXmlData($url, $body, $headers)
+        {
+          $headers['Zotero-API-Version'] = '3';
+          // Get response
+          $response = wp_remote_post( $url, array ( 'headers' => $headers, 'body' => $body ) );
+
+          if ( isset($response["response"]["code"]) && $response["response"]["code"] != "304" )
+          {
+              // Deal with errors
+              if ( is_wp_error($response) || ! isset($response['body']) )
+              {
+                  $this->request_error = $response->get_error_message();
+                  
+                  if ($response->get_error_code() == "http_request_failed")
+                  {
+                      // Try again with less restrictions
+                      add_filter('https_ssl_verify', '__return_false');
+                      $headers['Zotero-API-Version'] = '2';
+                      $response = wp_remote_post( $url, array ( 'headers' => $headers, 'body' => $body ) );
+                      
+                      if ( is_wp_error($response) || ! isset($response['body']) )
+                      {
+                          $this->request_error = $response->get_error_message();
+                      }
+                      else if ( $response == "An error occurred" || ( isset($response['body']) && $response['body'] == "An error occurred") )
+                      {
+                          $this->request_error = "WordPress was unable to export to Zotero. This is likely caused by an incorrect citation style name. For example, 'mla' is now 'modern-language-association'. Use the name found in the style's URL at the Zotero Style Repository.";
+                      }
+                      else // no errors this time
+                      {
+                          $this->request_error = false;
+                      }
+                  }
+              }
+              else if ( $response == "An error occurred" || ( isset($response['body']) && $response['body'] == "An error occurred") )
+              {
+                  $this->request_error = "WordPress was unable to export to Zotero. This is likely caused by an incorrect citation style name. For example, 'mla' is now 'modern-language-association'. Use the name found in the style's URL at the Zotero Style Repository.";
+              }
+              
+              // Then, get actual data
+              $data = wp_remote_retrieve_body( $response );
+              
+              // Make sure tags didn't return an error -- redo if so
+              if ( $data == "Tag not found" )
+              {
+                  $url_break = explode("/", $url);
+                  $url = $url_break[0]."//".$url_break[2]."/".$url_break[3]."/".$url_break[4]."/".$url_break[7];
+                  $url = str_replace("=50", "=5", $url);
+                  
+                  $data = $this->postXmlData( $url, $body, $headers );
+              }
+              
+          }
+
+          return array( "json" => $data);
+          
+        }
+
     }
 }
 
