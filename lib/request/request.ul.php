@@ -9,7 +9,7 @@
 	require('request.functions.php');
 	
 	// Content prep
-	$zp_xml = false;
+  $zp_xml = false;
 	
 	// Key
 	if (isset($_GET['key']) && preg_match("/^[a-zA-Z0-9]+$/", $_GET['key']))
@@ -23,13 +23,6 @@
 	else
 		$zp_xml = "No API User ID provided.";
 	
-	// content type
-	if (isset($_GET['content_type']) && preg_match("/^[a-zA-Z0-9\/]+$/", $_GET['content_type']))
-		$zp_content_type = trim(urldecode($_GET['content_type']));
-	else
-		$zp_xml = "No content type provided.";
-	
-	
 	if ($zp_xml === false)
 	{
 		// Access WordPress db
@@ -37,49 +30,77 @@
 		
 		// Get account
     $zp_account = zp_get_account ($wpdb, $zp_api_user_id);
+    $zp_url = "https://api.zotero.org/".$zp_account[0]->account_type."/".$zp_api_user_id."/items/";
+
+
+    
+    //Create new file attachment
+    $zp_new_attachment_url = $zp_url;
+    $zp_new_attachment = new ZotpressRequest();
+    $zp_new_attachment_headers = array('Content-Type' => 'application/json');
+    $zp_filename = $_FILES["fileToUpload"]["name"];
+    $zp_new_attachment_body = array(
+      'itemType' => 'attachment',
+      'parentItem' => $zp_item_key,
+      'linkMode' => 'imported_file',
+      'contentType' => 'application/pdf',
+      'filename' => $zp_filename
+    );
+    $zp_new_attachment_resp = $zp_new_attachment->postRequest($zp_url, $zp_new_attachment_body, $zp_new_attachment_headers);
+    echo "<h2>" . $zp_new_attachment_resp . "</h2>";
 
     //Get upload authorization
 
+    $zp_upload_auth_url = $zp_url.$zp_item_key."file";
+    $zp_upload_auth = new ZotpressRequest();
+    $zp_upload_auth_headers = array(
+      'Content-Type' => 'application/x-www-form-urlencoded',
+      'If-None-Match' => '*'
+    );
+
+    $zp_upload_auth_resp = $zp_upload_auth->post_request_contents($zp_upload_auth_url, "", $zp_upload_auth_headers); 
+    echo "<h2>" . $zp_upload_auth_resp . "</h2>";
+
     //Post file
+
+
+
 
     //Register upload
 
-
-
-
-
+    $zp_register_upload_resp = $zp_upload_auth->post_request_contents($zp_upload_auth_url, "", $zp_upload_auth_headers);
 
 		
 		// Build import structure
-		$zp_import_contents = new ZotpressRequest();
+		// $zp_import_contents = new ZotpressRequest();
 		
-		$zp_import_url = "https://api.zotero.org/".$zp_account[0]->account_type."/".$zp_api_user_id."/items/";
-		$zp_import_url .= $zp_item_key."/file/view?key=".$zp_account[0]->public_key;
+		// $zp_import_url = "https://api.zotero.org/".$zp_account[0]->account_type."/".$zp_api_user_id."/items/";
+		// $zp_import_url .= $zp_item_key."/file/view?key=".$zp_account[0]->public_key;
 		
-		// Read the external data
-        $zp_xml = $zp_import_contents->get_request_contents( $zp_import_url, true ); // Unsure about "true"
+		// // Read the external data
+    //     $zp_xml = $zp_import_contents->get_request_contents( $zp_import_url, true ); // Unsure about "true"
 		
-		// Determine filename based on content type
-		$zp_filename ="download-".$zp_item_key.".";
-		if ( strpos( $zp_content_type, "pdf" ) ) $zp_filename .= "pdf";
-		else if ( strpos( $zp_content_type, "wordprocessingml.document" ) ) $zp_filename .= "docx";
-		else if ( strpos( $zp_content_type, "msword" ) ) $zp_filename .= "doc";
-		else if ( strpos( $zp_content_type, "latex" ) ) $zp_filename .= "latex";
-		else if ( strpos( $zp_content_type, "presentationml.presentation" ) ) $zp_filename .= "pptx";
-		else if ( strpos( $zp_content_type, "ms-powerpointtd" ) ) $zp_filename .= "ppt";
-		else if ( strpos( $zp_content_type, "rtf" ) ) $zp_filename .= "rtf";
-		else if ( strpos( $zp_content_type, "opendocument.text" ) ) $zp_filename .= "odt";
-		else if ( strpos( $zp_content_type, "opendocument.presentation" ) ) $zp_filename .= "odp";
+		// // Determine filename based on content type
+		// $zp_filename ="download-".$zp_item_key.".";
+		// if ( strpos( $zp_content_type, "pdf" ) ) $zp_filename .= "pdf";
+		// else if ( strpos( $zp_content_type, "wordprocessingml.document" ) ) $zp_filename .= "docx";
+		// else if ( strpos( $zp_content_type, "msword" ) ) $zp_filename .= "doc";
+		// else if ( strpos( $zp_content_type, "latex" ) ) $zp_filename .= "latex";
+		// else if ( strpos( $zp_content_type, "presentationml.presentation" ) ) $zp_filename .= "pptx";
+		// else if ( strpos( $zp_content_type, "ms-powerpointtd" ) ) $zp_filename .= "ppt";
+		// else if ( strpos( $zp_content_type, "rtf" ) ) $zp_filename .= "rtf";
+		// else if ( strpos( $zp_content_type, "opendocument.text" ) ) $zp_filename .= "odt";
+		// else if ( strpos( $zp_content_type, "opendocument.presentation" ) ) $zp_filename .= "odp";
 		
-		if ( $zp_xml !== false && strlen(trim($zp_xml["json"])) > 0 )
-		{
-			header( "Content-Type:".$zp_content_type);
-			header( "Content-Disposition:attachment;filename=".$zp_filename);
-			echo $zp_xml["json"];
-		}
-		else {
-			$zp_xml = "No cite file found.";
-		}
+		// if ( $zp_xml !== false && strlen(trim($zp_xml["json"])) > 0 )
+		// {
+		// 	header( "Content-Type:".$zp_content_type);
+		// 	header( "Content-Disposition:attachment;filename=".$zp_filename);
+		// 	echo $zp_xml["json"];
+		// }
+		// else {
+		// 	$zp_xml = "No cite file found.";
+		// }
 	}
 	else {
 		echo $zp_xml;
