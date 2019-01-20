@@ -25,7 +25,9 @@
 			
 			'style' => false, 
 			'cite' => false,
-			'citeable' => false,
+      'citeable' => false,
+      'editable' => false,
+      'edit' => false,
 			'download' => false,
       'downloadable' => false,
       'upload' => false,
@@ -92,7 +94,11 @@
     
     // Uploadable
 		if ( $upload ) $upload = str_replace('"','',html_entity_decode($upload));
-		if ( $uploadable ) $upload = str_replace('"','',html_entity_decode($uploadable));
+    if ( $uploadable ) $upload = str_replace('"','',html_entity_decode($uploadable));
+    
+    // Editable
+		if ( $edit ) $edit = str_replace('"','',html_entity_decode($edit));
+		if ( $editable ) $edit = str_replace('"','',html_entity_decode($editable));
 		
 		// Show image
 		if ( $showimages ) $showimage = str_replace('"','',html_entity_decode($showimages));
@@ -153,7 +159,8 @@
 		$zpLib->setSortBy($sortby);
 		$zpLib->setOrder($order);
 		$zpLib->setCiteable($cite);
-		$zpLib->setUploadable($upload);
+    $zpLib->setUploadable($upload);
+    $zpLib->setEditable($edit);
 		$zpLib->setShowImage($showimage);
 		$zpLib->setURLWrap($urlwrap);
 		$zpLib->setTarget($target);

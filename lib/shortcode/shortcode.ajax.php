@@ -123,8 +123,10 @@
     if ( isset($_GET['uploadable'])
         && ( $_GET['uploadable'] == "yes" || $_GET['uploadable'] == "true" || $_GET['uploadable'] === true || $_GET['uploadable'] == 1 ) )
       $zp_uploadable = true;
-		
-		$zp_inclusive = false;
+
+    $zp_editable = true;
+    
+      $zp_inclusive = false;
 		if ( isset($_GET['inclusive'])
 				&& ( $_GET['inclusive'] == "yes" || $_GET['inclusive'] == "true" || $_GET['inclusive'] === true || $_GET['inclusive'] == 1 ) )
 			$zp_inclusive = true;
@@ -674,7 +676,7 @@
 						$item->bib = str_ireplace( $zp_highlight, "<strong>".$zp_highlight."</strong>", $item->bib );
 					
 					// Downloads, notes
-					if ( $zp_downloadable || $zp_shownotes || $zp_uploadable)
+					if ( $zp_downloadable || $zp_shownotes || $zp_uploadable || $zp_editable)
 					{
 						// Check if item has children that could be downloads or downloads
 						if ( $item->meta->numChildren > 0 )
@@ -719,8 +721,6 @@
 										$zp_notes_meta[count($zp_notes_meta)] = $zp_child->data->note;
 								}
               }
-              
-
 							
 							// Display download link if file exists
 							if ( $zp_download_meta )
@@ -778,7 +778,92 @@
                 </script>";
                 $item->bib = preg_replace('~(.*)' . preg_quote( '</div>', '~') . '(.*?)~', '$1' . $html_var . '$2', $item->bib, 1 );
               }
+              
+              if($zp_editable)
+              {
+                //get the item json  
+                $get_url = 'https://api.zotero.org/users/5354869/items/'.$item->key;
+                $getch = curl_init();
+                $gethttpHeaders = array();
+                //set api version - allowed to be overridden by passed in value
+                if(!isset($getheaders['Zotero-API-Version'])){
+                    $getheaders['Zotero-API-Version'] = ZOTERO_API_VERSION;
+                }
+
+              if(!isset($getheaders['Zotero-API-Key'])){
+                $getheaders['Zotero-API-Key'] = 'gO2EFIw7PG0nuiIe9xGU2iyq';
+                }
                 
+                foreach($getheaders as $key=>$val){
+                    $gethttpHeaders[] = "$key: $val";
+                }
+
+                curl_setopt($getch, CURLOPT_FRESH_CONNECT, true);
+
+                curl_setopt($getch, CURLOPT_URL, $get_url);
+                curl_setopt($getch, CURLOPT_HEADER, true);
+                curl_setopt($getch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($getch, CURLINFO_HEADER_OUT, true);
+                curl_setopt($getch, CURLOPT_HTTPHEADER, $gethttpHeaders);
+                curl_setopt($getch, CURLOPT_MAXREDIRS, 3);
+
+                if(TRUE){
+                    $getresponseBody = curl_exec($getch);
+                    $getresponseInfo = curl_getinfo($getch);
+                    $getzresponse = HttpResponse::fromString($getresponseBody);
+                }
+
+                if($getzresponse->isError()){
+                    echo $getzresponse->getStatus() . "\n";
+                    echo $getzresponse->getBody() . "\n";
+                    die("Error getting item\n\n");
+                }
+                else {
+                    $itemresponse = json_decode($getzresponse->getRawBody(), true);
+                    $itemBody = $itemresponse['data'];
+
+                    $edit_url = "";
+                    $edit_html_var = "
+                    <script src='../../jquery/jquery-3.3.1.js'></script>
+                    <script src='../../css/bootstrap/js/bootstrap.js'></script>
+                    <script src='../../js/jquery.medea.js'></script>
+                    <p>
+                    <button id='show-modal'>show</button>
+                    </p>
+                    <div class='row'>
+                      <div class='col-md-10'>
+                          <div id='source'></div>
+                          <div id='events'></div>
+                      </div>
+                      <div class='col-md-8'>
+                          <div id='editform'></div>
+                      </div>
+                    </div>
+                    <script>
+                      $(function() {
+                        var obj =".$itemBody.";
+                        $('#show-modal').on('click', function() { 
+                          var form = $('#editform').medea(obj, {modal: true});
+
+                          $('#show-modal').on('medea.submit', function(updated-json-object) {
+                              //TODO: Put the updated-json-object to zotero api in javascript or figure out a way to post to internal api to handle in php
+                            });
+
+                          $('#show-modal').on('medea.cancel', function(e, obj) {
+                              //TODO: Check what is default behavior, otherwise add default behavior here
+                            });
+                            
+                          $('#show-modal').on('medea.remove', function(e, obj) {
+                            //TODO: Check what is default behavior, otherwise add default behavior here
+                            });
+                        });
+                      });
+                    </script>
+                    ";
+
+                    $item->bib = preg_replace('~(.*)' . preg_quote( '</div>', '~') . '(.*?)~', '$1' . $edit_html_var . '$2', $item->bib, 1 );
+                }    
+              }
 
 							// Display notes, if any
 							if ( count($zp_notes_meta) > 0 )

@@ -21,6 +21,7 @@ class zotpressLib
 	private $citeable = false;
   private $downloadable = false;
   private $uploadable = false;
+  private $editable = false;
 	private $showimage = false;
 	private $is_admin = false;
 	private $urlwrap = false;
@@ -114,6 +115,11 @@ class zotpressLib
   public function setUploadable($upload)
 	{
 		$this->uploadable = $upload;
+  }
+  
+  public function setEditable($edit)
+	{
+		$this->editable = $edit;
 	}
 	
 	public function setShowImage($showimage)
@@ -215,7 +221,8 @@ class zotpressLib
 		$content .= '<span id="ZP_SORTBY" style="display: none;">'.$this->sortby.'</span>';
 		$content .= '<span id="ZP_ORDER" style="display: none;">'.$this->order.'</span>';
 		$content .= '<span id="ZP_CITEABLE" style="display: none;">'.$this->citeable.'</span>';
-		$content .= '<span id="ZP_UPLOADABLE" style="display: none;">'.$this->uploadable.'</span>';
+    $content .= '<span id="ZP_UPLOADABLE" style="display: none;">'.$this->uploadable.'</span>';
+    $content .= '<span id="ZP_EDITABLE" style="display: none;">'.$this->editable.'</span>';
 		$content .= '<span id="ZP_SHOWIMAGE" style="display: none;">'.$this->showimage.'</span>';
 		$content .= '<span id="ZP_TARGET" style="display: none;">'.$this->target.'</span>';
 		$content .= '<span id="ZP_URLWRAP" style="display: none;">'.$this->urlwrap.'</span>';
@@ -292,9 +299,10 @@ class zotpressLib
                         $maxperpage = 10; if ( $this->getMaxPerPage() ) $maxperpage = intval($this->getMaxPerPage());
                         $content .= '<input type="hidden" id="ZOTPRESS_AC_MAXPERPAGE" name="ZOTPRESS_AC_MAXPERPAGE" value="'.$maxperpage.'" />';
                         
-                        // Downloadable, Uploadable, Citeable, Showimages
+                        // Downloadable, Uploadable, Citeable, Showimages, Editable
                         $downloadable = false; if ( $this->downloadable ) $downloadable = $this->downloadable;
                         $uploadable = false; if ( $this->uploadable ) $uploadable = $this->uploadable;
+                        $editable = false; if ( $this->editable ) $editable = $this->editable;
                         $citeable = false; if ( $this->citeable ) $citeable = $this->citeable;
                         $showimages = false; if ( $this->showimage ) $showimages = $this->showimage;
                         

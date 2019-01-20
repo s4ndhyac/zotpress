@@ -28,6 +28,9 @@
             'upload' => "no",
             'uploadable' => false,
 
+            'edit' => "no",
+            'editable' => false,
+
             'notes' => false,
             'abstract' => false,
             'abstracts' => false,
@@ -75,6 +78,10 @@
         if ($upload) $upload = str_replace('"','',html_entity_decode($upload));
         else if ($uploadable) $upload = str_replace('"','',html_entity_decode($uploadable));
         if ($upload == "yes" || $upload == "true" || $upload === true) $upload = true; else $upload = false;
+
+        if ($edit) $edit = str_replace('"','',html_entity_decode($edit));
+        else if ($editable) $upload = str_replace('"','',html_entity_decode($editable));
+        if ($edit == "yes" || $edit == "true" || $edit === true) $edit = true; else $edit = false;
         
         $notes = str_replace('"','',html_entity_decode($notes));
         
@@ -132,6 +139,7 @@
 			<span class="ZP_SHOWTAGS" style="display: none;">'.$showtags.'</span>
       <span class="ZP_DOWNLOADABLE" style="display: none;">'.$download.'</span>
       <span class="ZP_UPLOADABLE" style="display: none;">'.$upload.'</span>
+      <span class="ZP_EDITABLE" style="display: none;">'.$edit.'</span>
 			<span class="ZP_NOTES" style="display: none;">'.$notes.'</span>
 			<span class="ZP_ABSTRACT" style="display: none;">'.$abstracts.'</span>
 			<span class="ZP_CITEABLE" style="display: none;">'.$cite.'</span>
