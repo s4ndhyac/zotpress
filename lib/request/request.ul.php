@@ -3834,24 +3834,6 @@ class Utils
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	// Include WordPress
 	require('../../../../../wp-load.php');
 	define('WP_USE_THEMES', false);
@@ -4144,50 +4126,6 @@ class Utils
         echo $lastResponse->getStatus() . "\n";
         echo $lastResponse->getRawBody() . "\n";
     }
-
-
-
-
-
-
-
-
-
-    // //Create new file attachment
-    // $zp_new_attachment_url = $zp_url;
-    // $zp_new_attachment = new ZotpressRequest();
-    // $zp_new_attachment_headers = array('Content-Type' => 'application/json');
-    // $zp_filename = $_FILES["fileToUpload"]["name"];
-    // $zp_new_attachment_body = array(
-    //   'itemType' => 'attachment',
-    //   'parentItem' => $zp_item_key,
-    //   'linkMode' => 'imported_file',
-    //   'contentType' => 'application/pdf',
-    //   'filename' => $zp_filename
-    // );
-    // $zp_new_attachment_resp = $zp_new_attachment->postRequest($zp_url, $zp_new_attachment_body, $zp_new_attachment_headers);
-    // echo '<pre>'; print_r($zp_new_attachment_resp); echo '</pre>';
-    // //echo "<h2>" . $zp_new_attachment_resp . "</h2>";
-
-    // //Get upload authorization
-
-    // $zp_upload_auth_url = $zp_url.$zp_item_key."file";
-    // $zp_upload_auth = new ZotpressRequest();
-    // $zp_upload_auth_headers = array(
-    //   'Content-Type' => 'application/x-www-form-urlencoded',
-    //   'If-None-Match' => '*'
-    // );
-
-    // $zp_upload_auth_resp = $zp_upload_auth->post_request_contents($zp_upload_auth_url, "", $zp_upload_auth_headers); 
-    // echo "<h2>" . $zp_upload_auth_resp . "</h2>";
-
-    // //Post file
-
-    // //Register upload
-
-    // $zp_register_upload_resp = $zp_upload_auth->post_request_contents($zp_upload_auth_url, "", $zp_upload_auth_headers);
-
-
 	}
 	else {
 		echo $zp_xml;
