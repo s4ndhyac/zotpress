@@ -779,7 +779,8 @@
                 $item->bib = preg_replace('~(.*)' . preg_quote( '</div>', '~') . '(.*?)~', '$1' . $html_var . '$2', $item->bib, 1 );
               }
               
-              if($zp_editable)
+              
+              //if($zp_editable)
               {
                 //get the item json  
                 $get_url = 'https://api.zotero.org/users/5354869/items/'.$item->key;
@@ -809,26 +810,24 @@
 
                 if(TRUE){
                     $getresponseBody = curl_exec($getch);
-                    $getresponseInfo = curl_getinfo($getch);
-                    $getzresponse = HttpResponse::fromString($getresponseBody);
                 }
-
-                if($getzresponse->isError()){
-                    echo $getzresponse->getStatus() . "\n";
-                    echo $getzresponse->getBody() . "\n";
+                
+                if(!$getresponseBody){
+                    echo $getresponseBody->getStatus() . "\n";
+                    echo $getresponseBody->getBody() . "\n";
                     die("Error getting item\n\n");
                 }
                 else {
-                    $itemresponse = json_decode($getzresponse->getRawBody(), true);
+                    $itemresponse = json_decode($getresponseBody);
                     $itemBody = $itemresponse['data'];
 
                     $edit_url = "";
                     $edit_html_var = "
-                    <script src='../../jquery/jquery-3.3.1.js'></script>
-                    <script src='../../css/bootstrap/js/bootstrap.js'></script>
-                    <script src='../../js/jquery.medea.js'></script>
+                    <script src='/jquery/jquery-3.3.1.js'></script>
+                    <script src='/css/bootstrap/js/bootstrap.js'></script>
+                    <script src='/js/jquery.medea.js'></script>
                     <p>
-                    <button id='show-modal'>show</button>
+                    <button id='show-modal'>Edit</button>
                     </p>
                     <div class='row'>
                       <div class='col-md-10'>
@@ -862,7 +861,7 @@
                     ";
 
                     $item->bib = preg_replace('~(.*)' . preg_quote( '</div>', '~') . '(.*?)~', '$1' . $edit_html_var . '$2', $item->bib, 1 );
-                }    
+               }    
               }
 
 							// Display notes, if any
