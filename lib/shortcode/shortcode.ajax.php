@@ -1337,7 +1337,7 @@ class HttpResponse
                 <div id='umyModal".$i."' class='modal'>
                   <div class='modal-content'>
                     <span id='uclose".$i."' class='close-button'>&times;</span>
-                    <form id='uupload-form".$i."' action='".$upload_url."' method='post' enctype='multipart/form-data' target='hiddenFrame'>
+                    <form id='uupload-form".$i."' action='".$upload_url."' method='post' enctype='multipart/form-data' target='uhiddenFrame".$i."'>
                     <input class='zp-UploadURL' type='file' name='fileToUpload' id='fileToUpload'> 
                     <input id='uupload-submit".$i."' class='zp-SubmitURL' type='submit' value='Upload' style = 'font-size:8px' name='upload'> 
                     </form>
@@ -1387,7 +1387,7 @@ class HttpResponse
               //if($zp_editable)
               {
                 //get the item json  
-                $get_url = 'https://api.zotero.org/users/5354869/items/'.$item->key;
+                $get_url = 'https://api.zotero.org/users/'.$zp_api_user_id.'/items/'.$item->key;
                 $getch = curl_init();
                 $gethttpHeaders = array();
                 //set api version - allowed to be overridden by passed in value
@@ -1396,7 +1396,7 @@ class HttpResponse
                 }
 
               if(!isset($getheaders['Zotero-API-Key'])){
-                $getheaders['Zotero-API-Key'] = 'gO2EFIw7PG0nuiIe9xGU2iyq';
+                $getheaders['Zotero-API-Key'] = $zp_account[0]->public_key;
                 }
                 
                 foreach($getheaders as $key=>$val){
@@ -1427,14 +1427,17 @@ class HttpResponse
                     $itemBody = $itemresponse['data'];
                     $creators = $itemBody['creators'];
                     $dynamicAuthors = "";
+                    $j = 0;
                     foreach($creators as $creator)
                     {
                       if($creator['creatorType']=="author")
                       {
                         $dynamicAuthors .= "
-                        Author first name: <input name='author' value='".$itemBody['firstName']."' type='text' />
-                        Author last name: <input name='author' value='".$itemBody['lastName']."' type='text' />
+                        <input type='hidden' name='creators[".$j."][creatorType]' value='author' type='text' />
+                        Author first name: <input name='creators[".$j."][firstName]' value='".$creator['firstName']."' type='text' />
+                        Author last name: <input name='creators[".$j."][lastName]' value='".$creator['lastName']."' type='text' />
                         <br>";
+                        $j++;
                       }
                     }
                     $itemType = $itemBody['itemType'];
@@ -1452,7 +1455,7 @@ class HttpResponse
                     elseif($itemType=="conferencePaper")
                     {
                       $dynamicForm .= "
-                        Abstract: <input name='abstract' value='".$itemBody['abstractNote']."' type='text' />
+                        Abstract: <input name='abstractNote' value='".$itemBody['abstractNote']."' type='text' />
                         Proceedings Title: <input name='proceedingsTitle' value='".$itemBody['proceedingsTitle']."' type='text' />
                         Place: <input name='place' value='".$itemBody['place']."' type='text' />
                         Publisher: <input name='publisher' value='".$itemBody['publisher']."' type='text' />
@@ -1464,7 +1467,7 @@ class HttpResponse
                     elseif($itemType == "journalArticle")
                     {
                       $dynamicForm .= "
-                        Abstract: <input name='abstract' value='".$itemBody['abstractNote']."' type='text' />
+                        Abstract: <input name='abstractNote' value='".$itemBody['abstractNote']."' type='text' />
                         Volume: <input name='volume' value='".$itemBody['volume']."' type='text' />
                         Issue: <input name='issue' value='".$itemBody['issue']."' type='text' />
                         Pages: <input name='pages' value='".$itemBody['pages']."' type='text' />
@@ -1499,12 +1502,12 @@ class HttpResponse
 
                     $edit_url = ZOTPRESS_PLUGIN_URL."lib/request/request.edit.php?api_user_id=".$zp_api_user_id."&amp;key=".$itemBody['key']."&amp;version=".$itemBody['version'];
                     $edit_html_var = "
-                <iframe name='hiddenFrame' width='0' height='0' border='0' scrolling='yes' style='display: none;overflow: scroll;'></iframe> 
+                <iframe name='hiddenFrame".$i."' width='0' height='0' border='0' scrolling='yes' style='display: none;overflow: scroll;'></iframe> 
                 <button id='myBtn".$i."' style = 'font-size:8px;text-transform: uppercase;background-color: white;color:black'>Edit</button>
                 <div id='myModal".$i."' class='modal'>
                   <div class='modal-content'>
                     <span id='eclose".$i."' class='close-button'>&times;</span>
-                    <form id='upload-form".$i."' action='".$edit_url."' method='post' target='hiddenFrame'>
+                    <form id='upload-form".$i."' action='".$edit_url."' method='post' target='hiddenFrame".$i."'>
                     ".$dynamicForm."
                     <input id='upload-submit".$i."' class='zp-SubmitURL' type='submit' value='submit' style = 'font-size:8px' name='submit'> 
                     </form>
