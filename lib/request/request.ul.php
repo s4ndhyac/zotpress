@@ -3890,7 +3890,7 @@ class Utils
 
     $requestData = json_encode($templateItem);
     
-    $url = 'https://api.zotero.org/users/5354869/items?key=gO2EFIw7PG0nuiIe9xGU2iyq';
+    $url = 'https://api.zotero.org/users/'.$zp_api_user_id.'/items?key='.$zp_account[0]->public_key;
     $ch = curl_init();
     $httpHeaders = array();
     //set api version - allowed to be overridden by passed in value
@@ -3947,7 +3947,7 @@ class Utils
         $uploadheaders = array('If-None-Match'=>'*');
 
 
-        $uploadurl = 'https://api.zotero.org/users/5354869/items/'.$uploadKey."/file";
+        $uploadurl = 'https://api.zotero.org/users/'.$zp_api_user_id.'/items/'.$uploadKey."/file";
         $uploadch = curl_init();
         $uploadhttpHeaders = array();
         //set api version - allowed to be overridden by passed in value
@@ -3960,7 +3960,7 @@ class Utils
         }
 
       if(!isset($uploadheaders['Zotero-API-Key'])){
-        $uploadheaders['Zotero-API-Key'] = 'gO2EFIw7PG0nuiIe9xGU2iyq';
+        $uploadheaders['Zotero-API-Key'] = $zp_account[0]->public_key;
         }
         
         foreach($uploadheaders as $key=>$val){
@@ -4011,7 +4011,7 @@ class Utils
                 }
 
               if(!isset($uploadHeaders['Zotero-API-Key'])){
-                $uploadHeaders['Zotero-API-Key'] = 'gO2EFIw7PG0nuiIe9xGU2iyq';
+                $uploadHeaders['Zotero-API-Key'] = $zp_account[0]->public_key;
                 }
                 
                 $uploadFilehttpHeaders[] = 'Expect:';
@@ -4045,13 +4045,9 @@ class Utils
                 echo '<pre>'; print_r($upFilezresponse); echo '</pre>';
                 echo '<pre>'; print_r($upFilezresponse->getStatus()); echo '</pre>';
 
-                //$uploadResponse = $this->net->request($resObject['url'], 'POST', $uploadPostData, $uploadHeaders);
                 if($upFilezresponse->getStatus() == 201){
                     libZoteroDebug("got upload response 201 ");
-                    //register upload
-                    //$ruparams = array('target'=>'item', 'targetModifier'=>'file', 'itemKey'=>$item->key);
-                    //$registerUploadData = array('upload'=>$resObject['uploadKey']);
-                    $regurl = 'https://api.zotero.org/users/5354869/items/'.$uploadKey."/file";
+                    $regurl = 'https://api.zotero.org/users/'.$zp_api_user_id.'/items/'.$uploadKey."/file";
                     $registerUploadData = "upload=" . $resObject['uploadKey'];
                     $regHeaders = array('If-None-Match'=>'*');
                     $regFilech = curl_init();
@@ -4066,7 +4062,7 @@ class Utils
                     }
     
                   if(!isset($regHeaders['Zotero-API-Key'])){
-                    $regHeaders['Zotero-API-Key'] = 'gO2EFIw7PG0nuiIe9xGU2iyq';
+                    $regHeaders['Zotero-API-Key'] = $zp_account[0]->public_key;
                     }
                     
                     foreach($regHeaders as $key=>$val){
@@ -4097,7 +4093,6 @@ class Utils
                     
                     echo '<pre>'; print_r($regFilezresponse); echo '</pre>';
 
-                    //$regUpResponse = $this->request($ruparams, 'POST', $registerUploadData, array('If-None-Match'=>'*'));
                     if($regFilezresponse->getStatus() == 204){
                         libZoteroDebug("successfully registered upload ");
                         return true;

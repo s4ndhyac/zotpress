@@ -3870,7 +3870,6 @@ if ($zp_xml === false)
   $zp_account = zp_get_account ($wpdb, $zp_api_user_id);
   $zp_url = "https://api.zotero.org/".$zp_account[0]->account_type."/".$zp_api_user_id."/items/".$zp_item_key;
   $itemBody = $_POST;
-  //$itemBody = json_decode(file_get_contents('php://input'), true);
   $library = new Library($zp_account[0]->account_type, $zp_api_user_id, '', $zp_account[0]->public_key);
   echo '<pre>'; print_r($itemBody); echo '</pre>';
   //add child attachment
@@ -3888,7 +3887,7 @@ if ($zp_xml === false)
   }
 
   if(!isset($headers['Zotero-API-Key'])){
-    $headers['Zotero-API-Key'] = 'gO2EFIw7PG0nuiIe9xGU2iyq';
+    $headers['Zotero-API-Key'] = $zp_account[0]->public_key;
     }
 
   if(!isset($headers['Content-Type'])){
