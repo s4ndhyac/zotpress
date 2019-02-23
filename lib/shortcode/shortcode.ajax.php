@@ -1069,7 +1069,8 @@ class HttpResponse
 				// Set up conditional vars
 				if ( $zp_shownotes ) $zp_notes_num = 1;
 				if ( $zp_showimage ) $zp_showimage_keys = "";
-				
+        
+        $i = 0;
 				// Get individual items
 				foreach ( $temp_data as $item )
 				{
@@ -1326,61 +1327,60 @@ class HttpResponse
               $downloadBib = "";
 							// Display download link if file exists
               if ( $zp_download_meta )
-                $downloadBib = "<a title='Download' class='zp-DownloadURL' href='".ZOTPRESS_PLUGIN_URL."lib/request/request.dl.php?api_user_id=".$zp_api_user_id."&amp;key=".$zp_download_meta["key"]."&amp;content_type=".$zp_download_meta["contentType"]."'>Download</a></div>";//$item->bib = preg_replace('~(.*)' . preg_quote( '</div>', '~') . '(.*?)~', '$1' . " <a title='Download' class='zp-DownloadURL' href='".ZOTPRESS_PLUGIN_URL."lib/request/request.dl.php?api_user_id=".$zp_api_user_id."&amp;key=".$zp_download_meta["key"]."&amp;content_type=".$zp_download_meta["contentType"]."'>Download</a></div>" . '$2', $item->bib, 1 );
+                $downloadBib = "<a title='Download' class='zp-DownloadURL' href='".ZOTPRESS_PLUGIN_URL."lib/request/request.dl.php?api_user_id=".$zp_api_user_id."&amp;key=".$zp_download_meta["key"]."&amp;content_type=".$zp_download_meta["contentType"]."'>Download</a></div>";
               else // Display upload link if file does not exist
               {
                 $upload_url = ZOTPRESS_PLUGIN_URL."lib/request/request.ul.php?api_user_id=".$zp_api_user_id."&amp;key=".$item->key."&amp;content_type=application/pdf";
                 $html_var = "
-                <iframe name='uhiddenFrame' width='0' height='0' border='0' style='display: none;'></iframe> 
-                <button id='umyBtn' style = 'font-size:8px;text-transform: uppercase;background-color: white;color:black'>Upload</button>
-                <div id='umyModal' class='modal'>
+                <iframe name='uhiddenFrame".$i."' width='0' height='0' border='0' style='display: none;'></iframe> 
+                <button id='umyBtn".$i."' style = 'font-size:8px;text-transform: uppercase;background-color: white;color:black'>Upload</button>
+                <div id='umyModal".$i."' class='modal'>
                   <div class='modal-content'>
-                    <span id='uclose' class='close-button'>&times;</span>
-                    <form id='uupload-form' action='".$upload_url."' method='post' enctype='multipart/form-data' target='hiddenFrame'>
+                    <span id='uclose".$i."' class='close-button'>&times;</span>
+                    <form id='uupload-form".$i."' action='".$upload_url."' method='post' enctype='multipart/form-data' target='hiddenFrame'>
                     <input class='zp-UploadURL' type='file' name='fileToUpload' id='fileToUpload'> 
-                    <input id='uupload-submit' class='zp-SubmitURL' type='submit' value='Upload' style = 'font-size:8px' name='upload'> 
+                    <input id='uupload-submit".$i."' class='zp-SubmitURL' type='submit' value='Upload' style = 'font-size:8px' name='upload'> 
                     </form>
                   </div>
                 </div>
                 <script>
                   // Get the modal
-                  var umodal = document.getElementById('umyModal');
+                  var umodal".$i." = document.getElementById('umyModal".$i."');
 
                   // Get the button that opens the modal
-                  var ubtn = document.getElementById('umyBtn');
+                  var ubtn".$i." = document.getElementById('umyBtn".$i."');
 
                   // Get the <span> element that closes the modal
-                  var uspan = document.getElementById('uclose');
+                  var uspan".$i." = document.getElementById('uclose".$i."');
 
-                  var uuploadForm = document.getElementById('uupload-form');
-                  var uuploadBtn = document.getElementById('uupload-submit');
+                  var uuploadForm".$i." = document.getElementById('uupload-form".$i."');
+                  var uuploadBtn".$i." = document.getElementById('uupload-submit".$i."');
 
                   // When the user clicks the button, open the modal 
-                  ubtn.onclick = function() {
-                    umodal.style.display = 'block';
+                  ubtn".$i.".onclick = function() {
+                    umodal".$i.".style.display = 'block';
                   
                   }
 
                   // When the user clicks on <span> (x), close the modal
-                  uspan.onclick = function() {
-                    umodal.style.display = 'none';
+                  uspan".$i.".onclick = function() {
+                    umodal".$i.".style.display = 'none';
                   }
 
                   // When the user clicks anywhere outside of the modal, close it
                   window.onclick = function(event) {
-                    if (event.target == umodal) {
-                      umodal.style.display = 'none';
+                    if (event.target == umodal".$i.") {
+                      umodal".$i.".style.display = 'none';
                     }
                   }
 
-                  uuploadForm.onclick = function(event) {
-                    if (event.target == uuploadBtn) {
-                      umodal.style.display = 'none';
+                  uuploadForm".$i.".onclick = function(event) {
+                    if (event.target == uuploadBtn".$i.") {
+                      umodal".$i.".style.display = 'none';
                     }
                   }
                 </script>";
                 $downloadBib = $html_var;
-                //$item->bib = preg_replace('~(.*)' . preg_quote( '</div>', '~') . '(.*?)~', '$1' . $html_var . '$2', $item->bib, 1 );
               }
               
               
@@ -1425,7 +1425,6 @@ class HttpResponse
                 else {
                     $itemresponse = json_decode($zresponse->getRawBody(), true);
                     $itemBody = $itemresponse['data'];
-                    //echo '<pre>'; print_r($itemBody); echo '</pre>';
                     $creators = $itemBody['creators'];
                     $dynamicAuthors = "";
                     foreach($creators as $creator)
@@ -1501,50 +1500,50 @@ class HttpResponse
                     $edit_url = ZOTPRESS_PLUGIN_URL."lib/request/request.edit.php?api_user_id=".$zp_api_user_id."&amp;key=".$itemBody['key']."&amp;version=".$itemBody['version'];
                     $edit_html_var = "
                 <iframe name='hiddenFrame' width='0' height='0' border='0' scrolling='yes' style='display: none;overflow: scroll;'></iframe> 
-                <button id='myBtn' style = 'font-size:8px;text-transform: uppercase;background-color: white;color:black'>Edit</button>
-                <div id='myModal' class='modal'>
+                <button id='myBtn".$i."' style = 'font-size:8px;text-transform: uppercase;background-color: white;color:black'>Edit</button>
+                <div id='myModal".$i."' class='modal'>
                   <div class='modal-content'>
-                    <span class='close-button'>&times;</span>
-                    <form id='upload-form' action='".$edit_url."' method='post' target='hiddenFrame'>
+                    <span id='eclose".$i."' class='close-button'>&times;</span>
+                    <form id='upload-form".$i."' action='".$edit_url."' method='post' target='hiddenFrame'>
                     ".$dynamicForm."
-                    <input id='upload-submit' class='zp-SubmitURL' type='submit' value='submit' style = 'font-size:8px' name='submit'> 
+                    <input id='upload-submit".$i."' class='zp-SubmitURL' type='submit' value='submit' style = 'font-size:8px' name='submit'> 
                     </form>
                   </div>
                 </div>
                 <script>
                   // Get the modal
-                  var modal = document.getElementById('myModal');
+                  var modal".$i." = document.getElementById('myModal".$i."');
 
                   // Get the button that opens the modal
-                  var btn = document.getElementById('myBtn');
+                  var btn".$i." = document.getElementById('myBtn".$i."');
 
                   // Get the <span> element that closes the modal
-                  var span = document.getElementsByClassName('close-button')[0];
+                  var span".$i." = document.getElementById('eclose".$i."');
 
-                  var uploadForm = document.getElementById('upload-form');
-                  var uploadBtn = document.getElementById('upload-submit');
+                  var uploadForm".$i." = document.getElementById('upload-form".$i."');
+                  var uploadBtn".$i." = document.getElementById('upload-submit".$i."');
 
                   // When the user clicks the button, open the modal 
-                  btn.onclick = function() {
-                    modal.style.display = 'block';
-                    modal.style.overflow = 'scroll';
+                  btn".$i.".onclick = function() {
+                    modal".$i.".style.display = 'block';
+                    modal".$i.".style.overflow = 'scroll';
                   }
 
                   // When the user clicks on <span> (x), close the modal
-                  span.onclick = function() {
-                    modal.style.display = 'none';
+                  span".$i.".onclick = function() {
+                    modal".$i.".style.display = 'none';
                   }
 
                   // When the user clicks anywhere outside of the modal, close it
                   window.onclick = function(event) {
-                    if (event.target == modal) {
-                      modal.style.display = 'none';
+                    if (event.target == modal".$i.") {
+                      modal".$i.".style.display = 'none';
                     }
                   }
 
-                  uploadForm.onclick = function(event) {
-                    if (event.target == uploadBtn) {
-                      modal.style.display = 'none';
+                  uploadForm".$i.".onclick = function(event) {
+                    if (event.target == uploadBtn".$i.") {
+                      modal".$i.".style.display = 'none';
                     }
                   }
                 </script>";
@@ -1582,7 +1581,8 @@ class HttpResponse
 						}
 					} // $zp_downloadable
 					
-					array_push( $zp_all_the_data,  $item);
+          array_push( $zp_all_the_data,  $item);
+          $i++;
 				} // foreach item
 				
 				// Show images
