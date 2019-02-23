@@ -1322,62 +1322,65 @@ class HttpResponse
 										$zp_notes_meta[count($zp_notes_meta)] = $zp_child->data->note;
 								}
               }
-							
+              
+              $downloadBib = "";
 							// Display download link if file exists
-							if ( $zp_download_meta )
-								$item->bib = preg_replace('~(.*)' . preg_quote( '</div>', '~') . '(.*?)~', '$1' . " <a title='Download' class='zp-DownloadURL' href='".ZOTPRESS_PLUGIN_URL."lib/request/request.dl.php?api_user_id=".$zp_api_user_id."&amp;key=".$zp_download_meta["key"]."&amp;content_type=".$zp_download_meta["contentType"]."'>Download</a></div>" . '$2', $item->bib, 1 );
+              if ( $zp_download_meta )
+                $downloadBib = "<a title='Download' class='zp-DownloadURL' href='".ZOTPRESS_PLUGIN_URL."lib/request/request.dl.php?api_user_id=".$zp_api_user_id."&amp;key=".$zp_download_meta["key"]."&amp;content_type=".$zp_download_meta["contentType"]."'>Download</a></div>";//$item->bib = preg_replace('~(.*)' . preg_quote( '</div>', '~') . '(.*?)~', '$1' . " <a title='Download' class='zp-DownloadURL' href='".ZOTPRESS_PLUGIN_URL."lib/request/request.dl.php?api_user_id=".$zp_api_user_id."&amp;key=".$zp_download_meta["key"]."&amp;content_type=".$zp_download_meta["contentType"]."'>Download</a></div>" . '$2', $item->bib, 1 );
               else // Display upload link if file does not exist
               {
                 $upload_url = ZOTPRESS_PLUGIN_URL."lib/request/request.ul.php?api_user_id=".$zp_api_user_id."&amp;key=".$item->key."&amp;content_type=application/pdf";
                 $html_var = "
-                <iframe name='hiddenFrame' width='0' height='0' border='0' style='display: none;'></iframe> 
-                <button id='myBtn' style = 'font-size:8px;text-transform: uppercase;background-color: white;color:black'>Upload</button>
-                <div id='myModal' class='modal'>
+                <iframe name='uhiddenFrame' width='0' height='0' border='0' style='display: none;'></iframe> 
+                <button id='umyBtn' style = 'font-size:8px;text-transform: uppercase;background-color: white;color:black'>Upload</button>
+                <div id='umyModal' class='modal'>
                   <div class='modal-content'>
-                    <span class='close-button'>&times;</span>
-                    <form id='upload-form' action='".$upload_url."' method='post' enctype='multipart/form-data' target='hiddenFrame'>
+                    <span id='uclose' class='close-button'>&times;</span>
+                    <form id='uupload-form' action='".$upload_url."' method='post' enctype='multipart/form-data' target='hiddenFrame'>
                     <input class='zp-UploadURL' type='file' name='fileToUpload' id='fileToUpload'> 
-                    <input id='upload-submit' class='zp-SubmitURL' type='submit' value='Upload' style = 'font-size:8px' name='upload'> 
+                    <input id='uupload-submit' class='zp-SubmitURL' type='submit' value='Upload' style = 'font-size:8px' name='upload'> 
                     </form>
                   </div>
                 </div>
                 <script>
                   // Get the modal
-                  var modal = document.getElementById('myModal');
+                  var umodal = document.getElementById('umyModal');
 
                   // Get the button that opens the modal
-                  var btn = document.getElementById('myBtn');
+                  var ubtn = document.getElementById('umyBtn');
 
                   // Get the <span> element that closes the modal
-                  var span = document.getElementsByClassName('close-button')[0];
+                  var uspan = document.getElementById('uclose');
 
-                  var uploadForm = document.getElementById('upload-form');
-                  var uploadBtn = document.getElementById('upload-submit');
+                  var uuploadForm = document.getElementById('uupload-form');
+                  var uuploadBtn = document.getElementById('uupload-submit');
 
                   // When the user clicks the button, open the modal 
-                  btn.onclick = function() {
-                    modal.style.display = 'block';
+                  ubtn.onclick = function() {
+                    umodal.style.display = 'block';
+                  
                   }
 
                   // When the user clicks on <span> (x), close the modal
-                  span.onclick = function() {
-                    modal.style.display = 'none';
+                  uspan.onclick = function() {
+                    umodal.style.display = 'none';
                   }
 
                   // When the user clicks anywhere outside of the modal, close it
                   window.onclick = function(event) {
-                    if (event.target == modal) {
-                      modal.style.display = 'none';
+                    if (event.target == umodal) {
+                      umodal.style.display = 'none';
                     }
                   }
 
-                  uploadForm.onclick = function(event) {
-                    if (event.target == uploadBtn) {
-                      modal.style.display = 'none';
+                  uuploadForm.onclick = function(event) {
+                    if (event.target == uuploadBtn) {
+                      umodal.style.display = 'none';
                     }
                   }
                 </script>";
-                $item->bib = preg_replace('~(.*)' . preg_quote( '</div>', '~') . '(.*?)~', '$1' . $html_var . '$2', $item->bib, 1 );
+                $downloadBib = $html_var;
+                //$item->bib = preg_replace('~(.*)' . preg_quote( '</div>', '~') . '(.*?)~', '$1' . $html_var . '$2', $item->bib, 1 );
               }
               
               
@@ -1546,7 +1549,7 @@ class HttpResponse
                   }
                 </script>";
 
-                    $item->bib = preg_replace('~(.*)' . preg_quote( '</div>', '~') . '(.*?)~', '$1' . $edit_html_var . '$2', $item->bib, 1 );
+                    $item->bib = preg_replace('~(.*)' . preg_quote( '</div>', '~') . '(.*?)~', '$1' .$downloadBib. $edit_html_var. '$2', $item->bib, 1 );
                }    
               }
 
