@@ -1423,16 +1423,87 @@ class HttpResponse
                     $itemresponse = json_decode($zresponse->getRawBody(), true);
                     $itemBody = $itemresponse['data'];
                     //echo '<pre>'; print_r($itemBody); echo '</pre>';
+                    $creators = $itemBody['creators'];
+                    $dynamicAuthors = "";
+                    foreach($creators as $creator)
+                    {
+                      if($creator['creatorType']=="author")
+                      {
+                        $dynamicAuthors .= "
+                        Author first name: <input name='author' value='".$itemBody['firstName']."' type='text' />
+                        Author last name: <input name='author' value='".$itemBody['lastName']."' type='text' />
+                        <br>";
+                      }
+                    }
+                    $itemType = $itemBody['itemType'];
+                    $dynamicForm = "Title: <input name='title' value='".$itemBody['title']."' type='text' />".$dynamicAuthors;
+                    if($itemType == "book")
+                    {
+                        $dynamicForm .= "
+                        Place: <input name='place' value='".$itemBody['place']."' type='text' />
+                        Publisher: <input name='publisher' value='".$itemBody['publisher']."' type='text' />
+                        Date: <input name='date' value='".$itemBody['date']."' type='text' />
+                        No. of Pages: <input name='numPages' value='".$itemBody['numPages']."' type='text' />
+                        URL: <input name='url' value='".$itemBody['url']."' type='text' />
+                        ";
+                    }
+                    elseif($itemType=="conferencePaper")
+                    {
+                      $dynamicForm .= "
+                        Abstract: <input name='abstract' value='".$itemBody['abstractNote']."' type='text' />
+                        Proceedings Title: <input name='proceedingsTitle' value='".$itemBody['proceedingsTitle']."' type='text' />
+                        Place: <input name='place' value='".$itemBody['place']."' type='text' />
+                        Publisher: <input name='publisher' value='".$itemBody['publisher']."' type='text' />
+                        Pages: <input name='pages' value='".$itemBody['pages']."' type='text' />
+                        Date: <input name='date' value='".$itemBody['date']."' type='text' />
+                        URL: <input name='url' value='".$itemBody['url']."' type='text' />
+                        ";
+                    }
+                    elseif($itemType == "journalArticle")
+                    {
+                      $dynamicForm .= "
+                        Abstract: <input name='abstract' value='".$itemBody['abstractNote']."' type='text' />
+                        Volume: <input name='volume' value='".$itemBody['volume']."' type='text' />
+                        Issue: <input name='issue' value='".$itemBody['issue']."' type='text' />
+                        Pages: <input name='pages' value='".$itemBody['pages']."' type='text' />
+                        Publication Title: <input name='publicationTitle' value='".$itemBody['publicationTitle']."' type='text' />
+                        Date: <input name='date' value='".$itemBody['date']."' type='text' />
+                        DOI: <input name='DOI' value='".$itemBody['DOI']."' type='text' />
+                        URL: <input name='url' value='".$itemBody['url']."' type='text' />
+                        ";
+                    }
+                    elseif($itemType == "manuscript")
+                    {
+                      $dynamicForm .= "
+                        Place: <input name='place' value='".$itemBody['place']."' type='text' />
+                        Date: <input name='date' value='".$itemBody['date']."' type='text' />
+                        No. of pages: <input name='numPages' value='".$itemBody['numPages']."' type='text' />
+                        URL: <input name='url' value='".$itemBody['url']."' type='text' />
+                        ";
+
+                    }
+                    elseif($itemType == "report")
+                    {
+                      $dynamicForm .= "
+                        Report Number: <input name='reportNumber' value='".$itemBody['reportNumber']."' type='text' />  
+                        Place: <input name='place' value='".$itemBody['place']."' type='text' />
+                        Institution: <input name='institution' value='".$itemBody['institution']."' type='text' />
+                        Date: <input name='date' value='".$itemBody['date']."' type='text' />
+                        Pages: <input name='pages' value='".$itemBody['pages']."' type='text' />
+                        URL: <input name='url' value='".$itemBody['url']."' type='text' />
+                        ";
+                    }
+
 
                     $edit_url = ZOTPRESS_PLUGIN_URL."lib/request/request.edit.php?api_user_id=".$zp_api_user_id."&amp;key=".$itemBody['key']."&amp;version=".$itemBody['version'];
                     $edit_html_var = "
-                <iframe name='hiddenFrame' width='0' height='0' border='0' style='display: none;'></iframe> 
+                <iframe name='hiddenFrame' width='0' height='0' border='0' scrolling='yes' style='display: none;overflow: scroll;'></iframe> 
                 <button id='myBtn' style = 'font-size:8px;text-transform: uppercase;background-color: white;color:black'>Edit</button>
                 <div id='myModal' class='modal'>
                   <div class='modal-content'>
                     <span class='close-button'>&times;</span>
                     <form id='upload-form' action='".$edit_url."' method='post' target='hiddenFrame'>
-                    Title: <input name='title' value='".$itemBody['title']."' type='text' />
+                    ".$dynamicForm."
                     <input id='upload-submit' class='zp-SubmitURL' type='submit' value='submit' style = 'font-size:8px' name='submit'> 
                     </form>
                   </div>
@@ -1453,6 +1524,7 @@ class HttpResponse
                   // When the user clicks the button, open the modal 
                   btn.onclick = function() {
                     modal.style.display = 'block';
+                    modal.style.overflow = 'scroll';
                   }
 
                   // When the user clicks on <span> (x), close the modal
