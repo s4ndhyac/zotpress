@@ -1327,7 +1327,7 @@ class HttpResponse
               $downloadBib = "";
 							// Display download link if file exists
               if ( $zp_download_meta )
-                $downloadBib = "<a title='Download' class='zp-DownloadURL' href='".ZOTPRESS_PLUGIN_URL."lib/request/request.dl.php?api_user_id=".$zp_api_user_id."&amp;key=".$zp_download_meta["key"]."&amp;content_type=".$zp_download_meta["contentType"]."'>Download</a></div>";
+                $downloadBib = "<a title='Download' class='zp-DownloadURL' href='".ZOTPRESS_PLUGIN_URL."lib/request/request.dl.php?api_user_id=".$zp_api_user_id."&amp;key=".$zp_download_meta["key"]."&amp;content_type=".$zp_download_meta["contentType"]."'>Download</a>";
               else // Display upload link if file does not exist
               {
                 $upload_url = ZOTPRESS_PLUGIN_URL."lib/request/request.ul.php?api_user_id=".$zp_api_user_id."&amp;key=".$item->key."&amp;content_type=application/pdf";
@@ -1549,7 +1549,7 @@ class HttpResponse
                       modal".$i.".style.display = 'none';
                     }
                   }
-                </script>";
+                </script></div>";
 
                     $item->bib = preg_replace('~(.*)' . preg_quote( '</div>', '~') . '(.*?)~', '$1' .$downloadBib. $edit_html_var. '$2', $item->bib, 1 );
                }    
