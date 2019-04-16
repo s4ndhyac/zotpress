@@ -3856,8 +3856,13 @@ else
   $zp_xml = "No API User ID provided.";
 
   // Item version
+session_start();
 if (isset($_GET['version']) && preg_match("/^[a-zA-Z0-9]+$/", $_GET['version']))
-  $zp_version = trim(urldecode($_GET['version']));
+{
+  $zp_version = trim(urldecode($_GET['version']));  
+  if($_SESSION[$zp_item_key] != $zp_version)
+    $zp_version = $_SESSION[$zp_item_key];
+}
 else
   $zp_xml = "No version provided.";
 
@@ -3916,15 +3921,21 @@ if(!isset($headers['If-Unmodified-Since-Version'])){
 
   if(TRUE){
       $responseBody = curl_exec($ch);
+      $response = HttpResponse::fromString($responseBody);
+      $respheaders = HttpResponse::extractHeaders($responseBody);
   }
 
   if(!$responseBody){
-      echo $createAttachmentResponse->getStatus() . "\n";
-      echo $createAttachmentResponse->getBody() . "\n";
+      echo $responseBody->getStatus() . "\n";
+      echo $responseBody->getBody() . "\n";
       die("Error creating attachment item\n\n");
   }
   else {   
+    echo '<pre>'; print_r($response); echo '</pre>';
     echo '<pre>'; print_r($responseBody); echo '</pre>';
+    echo '<pre>'; print_r($respheaders['last-modified-version']); echo '</pre>';
+    $_SESSION[$zp_item_key] = $respheaders['last-modified-version'];
+
   }
   }
   catch(Exception $e){

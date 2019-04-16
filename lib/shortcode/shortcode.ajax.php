@@ -1499,8 +1499,10 @@ class HttpResponse
                         ";
                     }
 
-
-                    $edit_url = ZOTPRESS_PLUGIN_URL."lib/request/request.edit.php?api_user_id=".$zp_api_user_id."&amp;key=".$itemBody['key']."&amp;version=".$itemBody['version'];
+                    session_start();
+                    if(!$_SESSION[$itemBody['key']])
+                      $_SESSION[$itemBody['key']] = $itemBody['version'];
+                    $edit_url = ZOTPRESS_PLUGIN_URL."lib/request/request.edit.php?api_user_id=".$zp_api_user_id."&amp;key=".$itemBody['key']."&amp;version=".$_SESSION[$itemBody['key']];
                     $edit_html_var = "
                 <iframe name='hiddenFrame".$i."' width='0' height='0' border='0' scrolling='yes' style='display: none;overflow: scroll;'></iframe> 
                 <button id='myBtn".$i."' style = 'font-size:8px;text-transform: uppercase;background-color: white;color:black'>Edit</button>
