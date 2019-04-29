@@ -1,0 +1,572 @@
+
+
+/* START OF AUTOCOMPLETE CSS */
+
+.ui-autocomplete.zp-autocomplete {
+    background: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+    -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+    margin: 0;
+    padding: 0;
+    max-height: 200px;
+    width: 253px !important;
+    overflow-y: auto;
+    overflow-x: hidden; /* prevent horizontal scrollbar */
+}
+.ui-autocomplete.zp-autocomplete-wide {
+    width: 775px !important;
+}
+
+.ui-autocomplete.zp-autocomplete li {
+    background: none;
+    border: none;
+    font-weight: 400;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    margin: 0;
+    padding: 0;
+    white-space: normal;
+}
+
+.ui-autocomplete.zp-autocomplete-wide li strong {
+    font-weight: 600;
+}
+
+.ui-autocomplete.zp-autocomplete li a {
+    background: none;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    display: block;
+    color: #666;
+    margin: 0;
+    padding: 6px 10px 6px 10px;
+}
+.ui-autocomplete.zp-autocomplete li a.ui-state-focus,
+.ui-autocomplete.zp-autocomplete li a.ui-state-hover {
+    background: none;
+    background-color: #eee; /* 8ec5fb */
+    margin: 0;
+
+    border-radius: 0;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+}
+
+.ui-tabs .ui-tabs-nav li a,
+.ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a {
+    outline: none;
+}
+
+/* END OF AUTOCOMPLETE CSS */
+
+
+
+/* START OF CREATOR BASICS */
+
+.zp-ZotpressMetaBox-Sub {
+    border: 1px solid #EEEEEE;
+    margin: 5px 15px;
+    padding: 0 5px;
+}
+
+/* END OF CREATOR BASICS */
+
+
+
+/* START OF IN-TEXT CREATOR CSS */
+
+div#zp-ZotpressMetaBox-InText {
+    display: none;
+}
+
+
+/* START OF SEARCH CSS */
+
+div#zp-ZotpressMetaBox-Search {
+    margin-bottom: 10px;
+}
+div#zp-ZotpressMetaBox-Search-Inner {
+    border: 5px solid #E14D43;
+    margin: 5px 15px;
+
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+input#zp-ZotpressMetaBox-Search-Input {
+    border: none;
+    background: #fff;
+    font-size: inherit;
+    margin: 0;
+    padding: 4px;
+    width: calc(100% - 4px);
+    height: 22px;
+}
+input#zp-ZotpressMetaBox-Search-Input.ui-autocomplete-loading {
+    background: #fff url("../images/loading_default.gif") no-repeat right center;
+}
+input#zp-ZotpressMetaBox-Search-Input.help {
+    color: #aaa;
+}
+
+div#zp-ZotpressMetaBox-Biblio-Generate,
+div#zp-ZotpressMetaBox-InText-Generate {
+    background: #f5f5f5 none repeat scroll 0 0;
+    margin: 15px;
+    padding: 5px;
+}
+div#zp-ZotpressMetaBox-Biblio-Generate-Inner,
+div#zp-ZotpressMetaBox-InText-Generate-Inner {
+    background-color: #f6f6f6;
+    display: none;
+    margin: 15px 0 0 0;
+}
+
+#ZotpressMetaBox .ui-widget-content a#zp-ZotpressMetaBox-Biblio-Generate-Button,
+#ZotpressMetaBox .ui-widget-content a#zp-ZotpressMetaBox-InText-Generate-Button {
+    color: #fff;
+    float: right;
+    line-height: 1.75em;
+    height: auto;
+}
+#ZotpressMetaBox .ui-widget-content a#zp-ZotpressMetaBox-Biblio-Clear-Button,
+#ZotpressMetaBox .ui-widget-content a#zp-ZotpressMetaBox-InText-Clear-Button {
+    float: left;
+    line-height: 1.75em;
+    height: auto;
+}
+
+div#zp-ZotpressMetaBox-Biblio-Generate hr.clear,
+div#zp-ZotpressMetaBox-InText-Generate hr.clear {
+    border: none;
+    clear: both;
+    margin: 0;
+    padding: 0;
+    visibility: hidden;
+    height: 1px;
+}
+
+div#ZotpressMetaBox div#zp-ZotpressMetaBox-Biblio-Generate label,
+div#ZotpressMetaBox div#zp-ZotpressMetaBox-InText-Generate label
+{
+    font-size: 13px;
+    display: block;
+    line-height: 1em;
+    margin-bottom: 0.5em;
+    padding: 0;
+}
+
+#zp-ZotpressMetaBox-Biblio-Generate-Text,
+#zp-ZotpressMetaBox-InText-Text-Bib,
+#zp-ZotpressMetaBox-InText-InText {
+    font-size: 13px;
+    width: 100%;
+}
+
+div#zp-ZotpressMetaBox-InText-Text-Bib-Container {
+    margin-top: 0.75em;
+}
+div#zp-ZotpressMetaBox-Biblio-Text-Bib-Container label span,
+div#zp-ZotpressMetaBox-InText-Text-Bib-Container label span {
+    color: #999;
+    font-weight: normal;
+}
+
+/* Start of Visual Indicator Item CSS */
+
+div#zp-ZotpressMetaBox-List {
+    margin-bottom: 10px;
+    padding: 0 20px;
+}
+
+div#zp-ZotpressMetaBox-List div.item {
+    position: relative;
+    border-top: 1px solid #eee;
+    font-weight: 400;
+    font-size: 0.7rem;
+    line-height: 1.2;
+    padding: 0.5rem 0;
+    width: 100%;
+}
+div#zp-ZotpressMetaBox-List div.item:first-child {
+    border-top: none;
+}
+
+div#zp-ZotpressMetaBox-List div.item .label {
+    display: block;
+    width: 90%;
+}
+
+div#zp-ZotpressMetaBox-List div.item .options {
+    margin: 0.5rem 0;
+    display: none;
+    width: 90%;
+}
+div#zp-ZotpressMetaBox-List.intext div.item .options {
+    display: block;
+}
+div#zp-ZotpressMetaBox-List div.item .options:before,
+div#zp-ZotpressMetaBox-List div.item .options:after {
+    content: "";
+    display: table;
+}
+div#zp-ZotpressMetaBox-List div.item .options:after {
+    clear: both;
+}
+div#zp-ZotpressMetaBox-List div.item .options label {
+    float: left;
+    line-height: 1.5;
+    margin-right: 0.2rem;
+}
+div#zp-ZotpressMetaBox-List div.item .options input {
+    text-transform: uppercase;
+    font-weight: 600;
+    float: left;
+    font-size: 0.7rem;
+    padding: 0 0.2rem;
+    width: 40%;
+}
+
+div#zp-ZotpressMetaBox-List div.item .item_key,
+div#zp-ZotpressMetaBox-List div.item .account {
+    display: block;
+    margin-top: 0.25rem;
+}
+div#zp-ZotpressMetaBox-List div.item .account {
+    margin-top: 0;
+}
+
+div#zp-ZotpressMetaBox-List div.item .delete {
+    position: absolute;
+    top: 0.5rem;
+    right: 0;
+    background-color: #e14d43;
+    color: #fff;
+    cursor: pointer;
+    font-size: 1.25em;
+    line-height: 1;
+    padding: 0.05em 0.35em 0.25em 0.35em;
+
+    border-radius: 1em;
+    -moz-border-radius: 1em;
+    -webkit-border-radius: 1em;
+}
+
+div#zp-ZotpressMetaBox-List hr.clear {
+    background: none;
+    border: none;
+    height: 1px;
+    margin: 0;
+    padding: 0;
+    visibility: hidden;
+}
+
+
+/* Start of Account CSS */
+
+.edit-post-meta-boxes-area #poststuff div#ZotpressMetaBox h2.hndle {
+    color: #191e23; /* 555d66 */
+    font-size: inherit;
+    border-bottom: 0;
+}
+
+div#zp-ZotpressMetaBox-Account {
+    margin: 0 15px;
+}
+select#zp-ZotpressMetaBox-Acccount-Select {
+    width: calc(100% - 4px);
+    height: 22px;
+}
+
+
+/* START OF OPTIONS CSS */
+
+div#ZotpressMetaBox div#zp-ZotpressMetaBox-Biblio-Options h4,
+div#ZotpressMetaBox div#zp-ZotpressMetaBox-InText-Options h4 {
+    color: #555d66;
+    font-weight: normal;
+    margin: 5px 0;
+}
+
+div#zp-ZotpressMetaBox-Biblio-Options-Inner,
+div#zp-ZotpressMetaBox-InText-Options-Inner {
+    display: none;
+    padding: 15px 0 5px;
+}
+div.zp-ZotpressMetaBox-Field {
+    font-size: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+div.zp-ZotpressMetaBox-Field-Radio {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+div#ZotpressMetaBox div.zp-ZotpressMetaBox-Field-Radio label {
+    font-size: 11px;
+    text-transform: uppercase;
+    margin: 0 4px 0 20px;
+    padding: 0;
+}
+div#zp-ZotpressMetaBox-Biblio-Options-Inner input,
+div#zp-ZotpressMetaBox-Biblio-Options-Inner select,
+div#zp-ZotpressMetaBox-InText-Options-Inner input,
+div#zp-ZotpressMetaBox-InText-Options-Inner select {
+    font-size: inherit;
+    margin: 0.5em 0;
+    line-height: 1em;
+}
+div#zp-ZotpressMetaBox-Biblio-Options-Inner select,
+div#zp-ZotpressMetaBox-InText-Options-Inner select {
+    height: auto;
+}
+
+div#zp-ZotpressMetaBox-Biblio-Options div.right,
+div#zp-ZotpressMetaBox-InText-Options div.right {
+    float: right;
+    line-height: 1;
+}
+
+div#ZotpressMetaBox div#zp-ZotpressMetaBox-Biblio-Options h5,
+div#ZotpressMetaBox div#zp-ZotpressMetaBox-InText-Options h5 {
+    background-color: #f9f9f9;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    font-size: 1em;
+    font-weight: normal;
+    margin: 0.5em 0;
+    padding: 0.5em 0.75em;
+}
+div#ZotpressMetaBox div#zp-ZotpressMetaBox-InText-Options h5.first {
+    margin-top: -0.3em;
+}
+
+div#zp-ZotpressMetaBox-Biblio-Options h4 span.toggle,
+div#zp-ZotpressMetaBox-InText-Options h4 span.toggle {
+    float: right;
+    cursor: pointer;
+    font-size: 0.8em;
+    font-weight: normal;
+    margin-left: 1em;
+    text-align: right;
+    text-transform: uppercase;
+    width: 50%;
+}
+div#zp-ZotpressMetaBox-Biblio-Options h4 span.toggle-button,
+div#zp-ZotpressMetaBox-InText-Options h4 span.toggle-button {
+    content: "\f347";
+    cursor: pointer;
+    display: inline-block;
+    font-size: 15px;
+    line-height: 15px;
+    margin: 3px 0 0;
+    padding: 0;
+    text-align: right;
+    width: 50%;
+    height: 16px;
+}
+div#zp-ZotpressMetaBox-Biblio-Options h4 span.toggle-button.dashicons-arrow-up-alt2,
+div#zp-ZotpressMetaBox-InText-Options h4 span.toggle-button.dashicons-arrow-up-alt2 {
+    content: "\f343";
+}
+
+div#zp-ZotpressMetaBox-Biblio-Options hr,
+div#zp-ZotpressMetaBox-InText-Options hr {
+    border: none;
+    background-color: #fff;
+    clear: both;
+    margin: 5px 0 0;
+    padding: 0;
+    height: 1px;
+}
+div#ZotpressMetaBox div#zp-ZotpressMetaBox-Biblio-Options select#zp-ZotpressMetaBox-Biblio-Options-Style {
+    float: none;
+}
+
+input#zp-ZotpressMetaBox-Biblio-Options-Format,
+input#zp-ZotpressMetaBox-InText-Options-Format {
+    min-width: 185px;
+}
+
+div#zp-ZotpressMetaBox-Biblio-Options p.note,
+div#zp-ZotpressMetaBox-InText-Options p.note {
+    color: #666;
+    font-size: 0.75em;
+    margin: 0 1em 0.75em;
+}
+
+/* END OF IN-TEXT CSS */
+
+
+
+/* START OF GENERIC METABOX CSS */
+
+div#ZotpressMetaBox.postbox div.inside {
+    /*padding: 0 6px;*/
+    margin: 0;
+    padding: 0;
+}
+
+div#ZotpressMetaBox h3.hndle span {
+    background: transparent url('../images/icon.png') no-repeat left center;
+    padding-left: 22px;
+}
+
+div.zp-ZotpressMetaBox-Tabs {
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 1px;
+    margin-bottom: 10px;
+}
+div.zp-ZotpressMetaBox-Tabs ul.ui-tabs-nav {
+    display: none;
+    border-radius: 4px 4px 0 0;
+    -moz-border-radius: 4px 4px 0 0;
+    background-color: #f6f6f6;
+    padding: 3px;
+    padding-bottom: 0;
+    overflow: hidden;
+    /*height: 20px;*/
+}
+div.zp-ZotpressMetaBox-Tabs ul li,
+div.zp-ZotpressMetaBox-Tabs ul.ui-tabs-nav li {
+    margin: 0;
+    padding: 5px 5px 0;
+    float: left;
+    height: 13px;
+}
+div.zp-ZotpressMetaBox-Tabs ul.ui-tabs-nav li.ui-state-active {
+    border-radius: 4px 4px 0 0;
+    -moz-border-radius: 4px 4px 0 0;
+    background-color: #fff;
+    height: 13px;
+}
+div.zp-ZotpressMetaBox-Tabs ul.ui-tabs-nav li a {
+    /*font: 9px/10px 'Arial', sans-serif;*/
+    letter-spacing: 1px;
+    padding: 0 3px;
+    text-decoration: none;
+    text-transform: uppercase;
+    vertical-align: top;
+}
+div.zp-ZotpressMetaBox-Tabs ul.ui-tabs-nav li.ui-state-active a {
+    color: #333;
+}
+div.zp-ZotpressMetaBox-Tabs input[type="radio"] {
+    vertical-align: text-top;
+}
+
+div#ZotpressMetaBox h4 {
+    margin: 0;
+    padding: 0;
+}
+
+div#zp-ZotpressMetaBox-Biblio-Options label,
+div#zp-ZotpressMetaBox-InText-Options label {
+    font-size: 13px;
+    color: #555d66;
+    margin: 0;
+    padding: 5px 0;
+    font-weight: normal;
+}
+div#ZotpressMetaBox div.zp-Tab label {
+    font-size: 12px;
+    display: block;
+    margin: 0;
+    padding: 0 0 5px 0;
+}
+div#ZotpressMetaBox div.zp-Tab select {
+    width: 100%;
+    height: 5em !important;
+}
+
+div.zp-Tab {
+    background-color: #fff;
+    padding: 0.6em !important;
+}
+p.zp-Note {
+    font-size: 9px !important;
+    font-style: italic !important;
+    color: #aaaaaa !important;
+    margin-top: 0 !important;
+}
+p.zp-Note {
+    font-size: 10px !important;
+    color: #888 !important;
+}
+div.zp-Tab span.label {
+    margin-top: 5px;
+    font-weight: bold;
+}
+div.zp-Tab span.label em {
+    font-style: normal;
+    text-decoration: underline;
+}
+
+.postbox div.zp-Tab input[type="text"],
+div.zp-Tab select {
+    margin-bottom: 10px;
+}
+
+/* MAIN */
+#normal-sortables .zp-ZotpressMetaBox-Tabs .sm {
+    display: none;
+}
+#normal-sortables .zp-ZotpressMetaBox-Tabs .wide {
+    display: block;
+}
+/* MAIN */
+
+/* SIDEBAR */
+#side-sortables .zp-ZotpressMetaBox-Tabs .sm {
+    display: block;
+}
+#side-sortables .zp-ZotpressMetaBox-Tabs .wide {
+    display: none;
+}
+/* SIDEBAR */
+
+.bibOnly {
+    display: none;
+}
+
+
+/* START OF ZOTPRESS METABOX TYPE */
+
+div#ZotpressMetaBox div#zp-ZotpressMetaBox-Type.zp-ZotpressMetaBox-Sub {
+    margin-top: 0;
+}
+
+div#ZotpressMetaBox div#zp-ZotpressMetaBox-Type h4 {
+    color: #555d66;
+    font-weight: normal;
+    float: left;
+    padding: 5px 0;
+}
+
+
+
+/* START OF CKEDIT STYLES */
+
+span.zp-Zotpress-Citation {
+    background-color: #eee !important;
+}
+span.zp-Zotpress-Citation:hover {
+    background-color: #ddd !important;
+}
+
+span.zp-Zotpress-Citation span.zp-Zotpress-Citation-Shortcode {
+    display: none !important;
+}
+
+span.zp-Zotpress-Citation span.zp-Zotpress-Citation-Info {
+    display: inline !important;
+}
+
+/* END OF CKEDIT STYLES */
