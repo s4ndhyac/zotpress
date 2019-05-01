@@ -214,7 +214,7 @@ if ( ! class_exists('ZotpressRequest') )
 
                     $data = $this->getXmlData( $url );
                 }
-
+                
                 // Add or update cache, if not attachment, etc.
                 if ( isset($response["headers"]["last-modified-version"]) )
                 {
@@ -229,28 +229,16 @@ if ( ! class_exists('ZotpressRequest') )
                         // TODO: Does this account for all unused metadata? Depends on item type ...
                         foreach( $data as $id => $item )
                         {
-                            if ( $data[$id]->version !== null ) unset($data[$id]->version);
                             if ( $data[$id]->library->type !== null ) unset($data[$id]->library->type);
                             if ( $data[$id]->library->name !== null ) unset($data[$id]->library->name);
                             if ( $data[$id]->library->links !== null ) unset($data[$id]->library->links);
                             if ( $data[$id]->links !== null ) unset($data[$id]->links);
-                            if ( $data[$id]->data->key !== null ) unset($data[$id]->data->key);
-                            if ( $data[$id]->data->version !== null ) unset($data[$id]->data->version);
                             if ( $data[$id]->data->series !== null ) unset($data[$id]->data->series);
                             if ( $data[$id]->data->seriesNumber !== null ) unset($data[$id]->data->seriesNumber);
                             if ( $data[$id]->data->seriesTitle !== null ) unset($data[$id]->data->seriesTitle);
                             if ( $data[$id]->data->seriesText !== null ) unset($data[$id]->data->seriesText);
-                            if ( $data[$id]->data->publicationTitle !== null ) unset($data[$id]->data->publicationTitle);
-                            if ( $data[$id]->data->journalAbbreviation !== null ) unset($data[$id]->data->journalAbbreviation);
-                            if ( $data[$id]->data->issue !== null ) unset($data[$id]->data->issue);
-                            if ( $data[$id]->data->volume !== null ) unset($data[$id]->data->volume);
                             if ( $data[$id]->data->numberOfVolumes !== null ) unset($data[$id]->data->numberOfVolumes);
                             if ( $data[$id]->data->edition !== null ) unset($data[$id]->data->edition);
-                            if ( $data[$id]->data->place !== null ) unset($data[$id]->data->place);
-                            if ( $data[$id]->data->publisher !== null ) unset($data[$id]->data->publisher);
-                            if ( $data[$id]->data->pages !== null ) unset($data[$id]->data->pages);
-                            if ( $data[$id]->data->numPages !== null ) unset($data[$id]->data->numPages);
-                            // if ( $data[$id]->data->language !== null ) unset($data[$id]->data->language);
                             if ( $data[$id]->data->shortTitle !== null ) unset($data[$id]->data->shortTitle);
                             if ( $data[$id]->data->accessDate !== null ) unset($data[$id]->data->accessDate);
                             if ( $data[$id]->data->archive !== null ) unset($data[$id]->data->archive);
