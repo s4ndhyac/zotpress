@@ -71,6 +71,10 @@ if ($zp_xml === false)
 if(!isset($headers['If-Unmodified-Since-Version'])){
   $headers['If-Unmodified-Since-Version'] = $zp_version;
 }
+
+if(!isset($headers['Expect'])){
+  $headers['Expect'] = '';
+}
   
   foreach($headers as $key=>$val){
       $httpHeaders[] = "$key: $val";
