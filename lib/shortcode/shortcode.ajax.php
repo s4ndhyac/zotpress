@@ -751,10 +751,7 @@ function Zotpress_shortcode_AJAX()
                 ";
             }
 
-            session_start();
-            if(!$_SESSION[$itemBody->key])
-              $_SESSION[$itemBody->key] = $itemBody->version;
-            $edit_url = ZOTPRESS_PLUGIN_URL."lib/request/request.edit.php?api_user_id=".$zpr["api_user_id"]."&amp;key=".$itemBody->key."&amp;version=".$_SESSION[$itemBody->key];
+            $edit_url = ZOTPRESS_PLUGIN_URL."lib/request/request.edit.php?api_user_id=".$zpr["api_user_id"]."&amp;key=".$itemBody->key;
             $edit_html_var = "
         <iframe name='hiddenFrame".$i."' width='0' height='0' border='0' scrolling='yes' style='display: none;overflow: scroll;'></iframe> 
         <button id='myBtn".$i."' style = 'font-size:8px;text-transform: uppercase;background-color: white;color:black'>Edit</button>
@@ -797,12 +794,13 @@ function Zotpress_shortcode_AJAX()
               modal".$i.".style.display = 'none';
             }
           }
-
+          
           uploadForm".$i.".onclick = function(event) {
             if (event.target == uploadBtn".$i.") {
               modal".$i.".style.display = 'none';
             }
           }
+
         </script></div>";
 
             $item->bib = preg_replace('~(.*)' . preg_quote( '</div>', '~') . '(.*?)~', '$1' .$downloadBib. $edit_html_var. '$2', $item->bib, 1 );
