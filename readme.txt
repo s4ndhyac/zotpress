@@ -1,11 +1,9 @@
 === Zotpress ===
-Contributors: kseaborn
+Contributors: kseaborn, s4ndhyac
 Plugin Name: Zotpress
-Plugin URI: http://katieseaborn.com/plugins/
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5HQ8FXAXS9MUQ
 Tags: zotero, zotpress, citation manager, citations, citation, cite, citing, bibliography, bibliographies, reference, referencing, references, reference list, reference manager, academic, academic blogging, academia, scholar, scholarly, scholarly blogging, cv, curriculum vitae, resume, publish, publication, publications
-Author URI: http://katieseaborn.com/
-Author: Katie Seaborn
+Author: Katie Seaborn, Sandhya Chandramohan
 Requires at least: 3.5
 Tested up to: 5.0.2
 Stable tag: 7.0.3
